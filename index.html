@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación de constancias CEL</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 16px;
+        }
+
+        .accordion {
+            max-width: 520px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+            overflow: hidden;
+            padding: 20px 24px 28px;
+        }
+
+        .centered-image {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .centered-image img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 900;
+            margin: 12px 0 16px;
+            border-bottom: 2px solid #222;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            background: #e8e8e8;
+            padding: 10px 12px;
+            font-size: .95em;
+            font-weight: 700;
+        }
+
+        p {
+            padding: 10px 12px;
+            font-size: .95em;
+            font-weight: 600;
+        }
+
+        .validacion {
+            margin-top: 18px;
+            text-align: center;
+        }
+
+        .validacion em {
+            font-size: .88em;
+            color: #444;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="accordion">
+        <div class="centered-image">
+            <img src="Banner-CEL.png" alt="Banner CEL">
+        </div>
+        <h1>VALIDACIÓN DE CONSTANCIA</h1>
+        <h3 id="nombre"></h3>
+        <p id="division"></p>
+        <h3 id="fecha"></h3>
+        <p id="idioma"></p>
+        <h3 id="tipo"></h3>
+        <p id="resultado"></p>
+        <div class="validacion">
+            <h3><br><em id="timestamp"></em></h3>
+        </div>
+    </div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const campos = {
+            nombre: "Nombre del Alumno",
+            division: "División",
+            fecha: "Fecha del exámen",
+            idioma: "Idioma",
+            tipo: "Tipo de examen presentado",
+            resultado: "Resultado del examen"
+        };
+        Object.entries(campos).forEach(([clave, etiqueta]) => {
+            const el = document.getElementById(clave);
+            if (el) el.textContent = `${etiqueta}: ${params.get(clave) || ""}`;
+        });
+
+        // Generar timestamp de validación
+        const ahora = new Date();
+        const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+        const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+        const dia = dias[ahora.getDay()];
+        const d = ahora.getDate();
+        const mes = meses[ahora.getMonth()];
+        const año = ahora.getFullYear();
+        const hora = ahora.toLocaleTimeString("es-MX", { hour12: false });
+        document.getElementById("timestamp").textContent =
+            `Esta constancia se está validando hoy ${dia} ${d} de ${mes} del ${año} a las ${hora}`;
+    </script>
+</body>
+
+</html>
